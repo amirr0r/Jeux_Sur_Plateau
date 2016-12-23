@@ -65,7 +65,46 @@ public class Menu {
 				}
 				break;
 			case 2 :
-				System.out.println("En cours de développement...Sorry");
+				Puissance4.rappelRegles();
+				char [][] save = new char[6][7];
+				boolean finish = false;
+				System.out.println("\nJoueur n°1 c'est à vous !");
+				int j1Pion = Puissance4.saisiePion();
+				Puissance4.placement(j1Pion, 'O', save);
+				Puissance4.affichePlateau(save);
+				System.out.println("\nJoueur n°2 c'est à vous !");
+				int j2Pion = Puissance4.saisiePion();
+				Puissance4.placement(j2Pion, 'X', save);
+				Puissance4.affichePlateau(save);
+				while (!finish) {
+					System.out.println("\nJoueur n°1 c'est à vous !");
+					j1Pion = Puissance4.saisiePion();
+					while (Puissance4.verifColonnePleine(save, j1Pion)) {
+						System.out.print("Colonne pleine. Try une autre :");
+						j1Pion = Puissance4.saisiePion();
+					}
+					Puissance4.placement(j1Pion, 'O', save);
+					if (Puissance4.tableauPlein(save) || Puissance4.alignement(save, 'O'))
+						finish = true;
+					Puissance4.affichePlateau(save);
+					if (Puissance4.alignement(save, 'O'))
+						System.out.println("Joueur n°1 a gagné !");
+					if (finish != true) {
+						System.out.println("\nJoueur n°2 c'est à vous !");
+						j2Pion = Puissance4.saisiePion();
+						while (Puissance4.verifColonnePleine(save, j2Pion)) {
+							System.out.print("Colonne pleine. Try une autre :");
+							j2Pion = Puissance4.saisiePion();
+						}
+						Puissance4.placement(j2Pion, 'X', save);
+						if (Puissance4.tableauPlein(save) || Puissance4.alignement(save, 'X'))
+							finish = true;
+						Puissance4.affichePlateau(save);	
+						if (Puissance4.alignement(save, 'X'))
+							System.out.println("Joueur n°2 a gagné !");
+					}
+				}
+				System.out.println("Partie finie !");
 				break;
 			case 3 :
 				System.out.println("En cours de développement...Sorry");
