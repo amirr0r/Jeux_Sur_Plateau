@@ -107,7 +107,56 @@ public class Menu {
 				System.out.println("Partie finie !");
 				break;
 			case 3 :
-				System.out.println("En cours de développement...Sorry");
+				boolean fin = false;
+				char [][] othellier = new char [8][8];
+				othellier [3][3] = 'O';
+				othellier [3][4] = 'X';
+				othellier [4][4] = 'O';
+				othellier [4][3] = 'X';
+				Othello.affichePlateau(othellier);
+				System.out.println("Joueur n°1 c'est à vous !!!");
+				int [] croix = Othello.saisiePion();
+				while(!Othello.verifPion(othellier, croix)) {
+					System.out.println(Othello.verifPion(othellier, croix));
+					System.out.println("Placement impossible...try again pliz");
+					croix = Othello.saisiePion();
+				}
+				Othello.placementPion(othellier, croix, 'X');
+				Othello.convert(othellier, 'X', croix);
+				Othello.affichePlateau(othellier);
+				System.out.println("Joueur n°2 c'est à vous !!!");
+				int [] rond = Othello.saisiePion();
+				while(!Othello.verifPion(othellier, rond)) {
+					System.out.println(Othello.verifPion(othellier, rond));
+					System.out.println("Placement impossible...try again pliz");
+					rond = Othello.saisiePion();
+				}
+				Othello.placementPion(othellier, rond, 'O');
+				Othello.convert(othellier, 'O', rond);
+				Othello.affichePlateau(othellier);
+				while (!fin) {
+					System.out.println("Joueur n°1 c'est à vous !!!");
+					croix = Othello.saisiePion();
+					while(!Othello.verifPion(othellier, croix)) {
+						System.out.println(Othello.verifPion(othellier, croix));
+						System.out.println("Placement impossible...try again pliz");
+						croix = Othello.saisiePion();
+					}
+					Othello.placementPion(othellier, croix, 'X');
+					Othello.convert(othellier, 'X', croix);
+					Othello.affichePlateau(othellier);
+					System.out.println("Joueur n°2 c'est à vous !!!");
+					rond = Othello.saisiePion();
+					while(!Othello.verifPion(othellier, rond)) {
+						System.out.println(Othello.verifPion(othellier, rond));
+						System.out.println("Placement impossible...try again pliz");
+						rond = Othello.saisiePion();
+					}
+					Othello.placementPion(othellier, rond, 'O');
+					Othello.convert(othellier, 'O', rond);
+					Othello.affichePlateau(othellier);
+				}
+				Othello.winner(othellier, 'X', 'O');
 				break;
 			default :
 				break;
