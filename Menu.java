@@ -158,7 +158,7 @@ public class Menu {
 					if (Othello.tableauPlein(othellier))
 						fin = true;
 				}
-				//Othello.winner(othellier); a corriger
+				Othello.winner(othellier);
 				break;
 			default :
 				break;

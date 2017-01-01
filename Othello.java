@@ -513,7 +513,7 @@ public class Othello {
 	public static void winner(char [][] t) {
 		int nbC1 = 0, nbC2 = 0;
 		for (int ligne=0; ligne < t.length; ligne++) {
-			for (int colonne=0; colonne < t[0].length; ligne++) {
+			for (int colonne=0; colonne < t[0].length; colonne++) {
 				if (t[ligne][colonne] == 'X')
 					nbC1 = nbC1 + 1;
 				else if (t[ligne][colonne] == 'O')
