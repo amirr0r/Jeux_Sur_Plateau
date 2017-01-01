@@ -26,6 +26,10 @@ public class Othello {
 			System.out.println();
 		}
 	}
+	/**
+	 * 
+	 * @return les coordonnees du pion saisies par l'utlisateur 
+	 */
 	public static int[] saisiePion() {
 		int [] t = new int[2];
 		saisie = new Scanner(System.in);
@@ -44,6 +48,12 @@ public class Othello {
 		}
 		return t;
 	}
+	/**
+	 * 
+	 * @param t : tableau de char(othellier)
+	 * @param tab : coordonnees du pion
+	 * @return true si le pion peut se placer aux coordonnees indiques 
+	 */
 	public static boolean verifPion(char [][] t, int [] tab ) {
 		boolean verdict = true;
 		int x = tab[0], y = tab[1];
@@ -97,10 +107,18 @@ public class Othello {
 		}
 		return verdict;
 	}
+	/*
+	 * place le pion sur l'othellier
+	 */
 	public static void placementPion(char [][] t, int [] tab, char c) {
 		int x = tab[0], y = tab[1];
 		t [x][y] = c;
 	}
+	/**
+	 * 
+	 * @param t tableau de char 2D
+	 * @return true si le tableau est plein
+	 */
 	public static boolean tableauPlein(char[][] t) {
 		boolean verdict = true;
 		for (int height = 0 ; height < t.length ; height++) 
@@ -109,7 +127,9 @@ public class Othello {
 					verdict = false;
 		return verdict;
 	}
-	// fonction qui vérifie s'il y a un caractère semblable aux alentours sinon changement de pion
+	/*
+	 * convertit les pions pris en sandwich
+	 */
 	public static void convert(char [][] t, char c, int [] tab) {
 		char c2 = ' ';
 		int x = tab[0], y = tab[1];
@@ -178,7 +198,7 @@ public class Othello {
 					if (t[x][y-2] == c2 && t[x][y-3] == c2 && t[x][y-4] == c) {
 						t[x][y-1] = c;
 						t[x][y-2] = c;
-						t[x][y+3] = c;
+						t[x][y-3] = c;
 					}
 
 				}
@@ -215,7 +235,7 @@ public class Othello {
 		////////////////////////////////////////////////VERTICAL
 		if(x==0 || x==1 || x==2 || x==3 || x==4 || x==5 || x==6) {
 			if (t[x+1][y] == c2) {
-				if (t[x+2][y] == c)
+				if (x != 6 && t[x+2][y] == c)
 					t[x+1][y] = c;
 				if (x==0 || x==1 || x==2 || x==3 || x==4) {
 					if (t[x+2][y] == c2 && t[x+3][y] == c) {
@@ -311,8 +331,8 @@ public class Othello {
 		////DIAGONAL
 		if ((x==7 || x== 6 || x==5 || x==4 || x==3 || x==2)) {
 			if (y!=7 && t[x][y] == c && t[x-1][y+1] == c2) {
-					if (t[x-2][y+2] == c)
-						t[x-1][y+1] = c;
+				if (x != 0 && x != 1 && y != 6 && y != 7 && t[x-2][y+2] == c)
+					t[x-1][y+1] = c;
 				if ((y==0 || y==1 || y==2 || y==3 || y==4) && (x==7 || x== 6 || x==5 || x==4 || x==3)) {
 					if (t[x-2][y+2] == c2 && t[x-3][y+3] == c) {
 						t[x-1][y+1] = c;
@@ -354,97 +374,97 @@ public class Othello {
 					}
 				}
 			}
-			if (x!= 7 && y != 0 && t[x][y] == c && t[x+1][y-1]==c2) {
-				if (t[x+2][y-2] == c)
+		}
+		if (x!= 7 && y != 0 && t[x][y] == c && t[x+1][y-1]==c2) {
+			if (x!= 6 && y!= 1 && t[x+2][y-2] == c)
+				t[x+1][y-1] = c;
+			if ((x==0 || x==1 || x==2 || x==3 || x==4) && (y==7 || y== 6 || y==5 || y==4 || y==3)) {
+				if (t[x+2][y-2] == c2 && t[x+3][y-3] == c) {
 					t[x+1][y-1] = c;
-				if ((x==0 || x==1 || x==2 || x==3 || x==4) && (y==7 || y== 6 || y==5 || y==4 || y==3)) {
-					if (t[x+2][y-2] == c2 && t[x+3][y-3] == c) {
-						t[x+1][y-1] = c;
-						t[x+2][y-2] = c;
-					}
-				}
-				if ((x==0 || x==1 || x==2 || x==3) && (y==7 || y== 6 || y==5 || y==4)) {
-					if (t[x+2][y-2] == c2 && t[x+3][y-3] == c && t[x+4][y-4] == c) {
-						t[x+1][y-1] = c;
-						t[x+2][y-2] = c;
-						t[x+3][y-3] = c;
-					}
-				}
-				if ((x==0 || x==1 || x==2) && (y==7 || y== 6 || y==5)) {
-					if (t[x+2][y-2] == c2 && t[x+3][y-3] == c && t[x+4][y-4] == c2 && t[x+5][y-5] == c) {
-						t[x+1][y-1] = c;
-						t[x+2][y-2] = c;
-						t[x+3][y-3] = c;
-						t[x+4][y-4] = c;
-					}
-				}
-				if((x==0 || x==1) && (y==7 || y== 6)) {
-					if (t[x+2][y-2] == c2 && t[x+3][y-3] == c && t[x+4][y-4] == c2 && t[x+5][y-5] == c2 && t[x+6][y-6] == c) {
-						t[x+1][y-1] = c;
-						t[x+2][y-2] = c;
-						t[x+3][y-3] = c;
-						t[x+4][y-4] = c;
-						t[x+5][y-5] = c;
-					}
-				}
-				if (x== 0 && y==7) {
-					if (t[x+2][y-2] == c2 && t[x+3][y-3] == c && t[x+4][y-4] == c2 && t[x+5][y-5] == c2 && t[x+6][y-6] == c2 && t[x+7][y-7] == c) {
-						t[x+1][y-1] = c;
-						t[x+2][y-2] = c;
-						t[x+3][y-3] = c;
-						t[x+4][y-4] = c;
-						t[x+5][y-5] = c;
-						t[x+6][y-6] = c;
-					}
+					t[x+2][y-2] = c;
 				}
 			}
-			if (x!= 0 && x!= 1 && y!=0 && t[x][y]==c && t[x-1][y-1] == c2) {
-				if (t[x-2][y-2] == c)
+			if ((x==0 || x==1 || x==2 || x==3) && (y==7 || y== 6 || y==5 || y==4)) {
+				if (t[x+2][y-2] == c2 && t[x+3][y-3] == c && t[x+4][y-4] == c) {
+					t[x+1][y-1] = c;
+					t[x+2][y-2] = c;
+					t[x+3][y-3] = c;
+				}
+			}
+			if ((x==0 || x==1 || x==2) && (y==7 || y== 6 || y==5)) {
+				if (t[x+2][y-2] == c2 && t[x+3][y-3] == c && t[x+4][y-4] == c2 && t[x+5][y-5] == c) {
+					t[x+1][y-1] = c;
+					t[x+2][y-2] = c;
+					t[x+3][y-3] = c;
+					t[x+4][y-4] = c;
+				}
+			}
+			if((x==0 || x==1) && (y==7 || y== 6)) {
+				if (t[x+2][y-2] == c2 && t[x+3][y-3] == c && t[x+4][y-4] == c2 && t[x+5][y-5] == c2 && t[x+6][y-6] == c) {
+					t[x+1][y-1] = c;
+					t[x+2][y-2] = c;
+					t[x+3][y-3] = c;
+					t[x+4][y-4] = c;
+					t[x+5][y-5] = c;
+				}
+			}
+			if (x== 0 && y==7) {
+				if (t[x+2][y-2] == c2 && t[x+3][y-3] == c && t[x+4][y-4] == c2 && t[x+5][y-5] == c2 && t[x+6][y-6] == c2 && t[x+7][y-7] == c) {
+					t[x+1][y-1] = c;
+					t[x+2][y-2] = c;
+					t[x+3][y-3] = c;
+					t[x+4][y-4] = c;
+					t[x+5][y-5] = c;
+					t[x+6][y-6] = c;
+				}
+			}
+		}
+		if (x!= 0 && y!=0 && t[x][y]==c && t[x-1][y-1] == c2) {
+			if (x!= 1 && y!=1 && t[x-2][y-2] == c)
+				t[x-1][y-1] = c;
+			if ((y==7 || y==6 || y==5 || y==4 || y==3) && (x==7 || x== 6 || x==5 || x==4 || x==3)) {
+				if (t[x-2][y-2] == c2 && t[x-3][y-3] == c) {
 					t[x-1][y-1] = c;
-				if ((y==7 || y==6 || y==5 || y==4 || y==3) && (x==7 || x== 6 || x==5 || x==4 || x==3)) {
-					if (t[x-2][y-2] == c2 && t[x-3][y-3] == c) {
-						t[x-1][y-1] = c;
-						t[x-2][y-2] = c;
-					}
+					t[x-2][y-2] = c;
 				}
-				if ((y==7 || y== 6 || y==5 || y==4) && (x==7 || x== 6 || x==5 || x==4)) {
-					if (t[x-2][y-2] == c2 && t[x-3][y-3] == c2 && t[x-4][y-4] == c) {
-						t[x-1][y-1] = c;
-						t[x-2][y-2] = c;
-						t[x-3][y-3] = c;
-					}
+			}
+			if ((y==7 || y== 6 || y==5 || y==4) && (x==7 || x== 6 || x==5 || x==4)) {
+				if (t[x-2][y-2] == c2 && t[x-3][y-3] == c2 && t[x-4][y-4] == c) {
+					t[x-1][y-1] = c;
+					t[x-2][y-2] = c;
+					t[x-3][y-3] = c;
 				}
-				if ((y==7 || y== 6 || y==5) && (x==7 || x== 6 || x==5)) {
-					if (t[x-2][y-2] == c2 && t[x-3][y-3] == c2 && t[x-4][y-4] == c2 && t[x-5][y-5] == c) {
-						t[x-1][y-1] = c;
-						t[x-2][y-2] = c;
-						t[x-3][y-3] = c;
-						t[x-4][y-4] = c;
-					}
+			}
+			if ((y==7 || y== 6 || y==5) && (x==7 || x== 6 || x==5)) {
+				if (t[x-2][y-2] == c2 && t[x-3][y-3] == c2 && t[x-4][y-4] == c2 && t[x-5][y-5] == c) {
+					t[x-1][y-1] = c;
+					t[x-2][y-2] = c;
+					t[x-3][y-3] = c;
+					t[x-4][y-4] = c;
 				}
-				if ((y==7 || y== 6) && (x==7 || x== 6)) {
-					if (t[x-2][y-2] == c2 && t[x-3][y-3] == c2 && t[x-4][y-4] == c2 && t[x-5][y-5] == c2 && t[x-6][y-6] == c) {
-						t[x-1][y-1] = c;
-						t[x-2][y-2] = c;
-						t[x-3][y-3] = c;
-						t[x-4][y-4] = c;
-						t[x-5][y-5] = c;
-					}
+			}
+			if ((y==7 || y== 6) && (x==7 || x== 6)) {
+				if (t[x-2][y-2] == c2 && t[x-3][y-3] == c2 && t[x-4][y-4] == c2 && t[x-5][y-5] == c2 && t[x-6][y-6] == c) {
+					t[x-1][y-1] = c;
+					t[x-2][y-2] = c;
+					t[x-3][y-3] = c;
+					t[x-4][y-4] = c;
+					t[x-5][y-5] = c;
 				}
-				if (y==7 && x==7) {
-					if (t[x-2][y-2] == c2 && t[x-3][y-3] == c2 && t[x-4][y-4] == c2 && t[x-5][y-5] == c2 && t[x-6][y-6] == c2 && t[x-7][y-7] == c) {
-						t[x-1][y-1] = c;
-						t[x-2][y-2] = c;
-						t[x-3][y-3] = c;
-						t[x-4][y-4] = c;
-						t[x-5][y-5] = c;
-						t[x-6][y-6] = c;
-					}
+			}
+			if (y==7 && x==7) {
+				if (t[x-2][y-2] == c2 && t[x-3][y-3] == c2 && t[x-4][y-4] == c2 && t[x-5][y-5] == c2 && t[x-6][y-6] == c2 && t[x-7][y-7] == c) {
+					t[x-1][y-1] = c;
+					t[x-2][y-2] = c;
+					t[x-3][y-3] = c;
+					t[x-4][y-4] = c;
+					t[x-5][y-5] = c;
+					t[x-6][y-6] = c;
 				}
 			}
 		}
 		if (x!= 7 && y != 7 && t[x][y]==c && t[x+1][y+1] == c2) {
-			if (x!= 6 && t[x+2][y+2] == c)
+			if (x!= 6 && y !=6 && t[x+2][y+2] == c)
 				t[x+1][y+1] = c;
 			if ((y==0 || y==1 || y==2 || y==3 || y==4) && (x==0 || x== 1 || x==2 || x==3 || x==4)) {
 				if (t[x+2][y+2] == c2 && t[x+3][y+3] == c) {
@@ -487,27 +507,30 @@ public class Othello {
 				}
 		}
 	}
-	public static void winner(char [][] t, char c1, char c2) {
+	/*
+	 * affiche le nombre d'occurences des pions X et O
+	 */
+	public static void winner(char [][] t) {
 		int nbC1 = 0, nbC2 = 0;
 		for (int ligne=0; ligne < t.length; ligne++) {
 			for (int colonne=0; colonne < t[0].length; ligne++) {
-				if (t[ligne][colonne] == c1)
-					nbC1++;
-				else if (t[ligne][colonne] == c2)
-					nbC2++;
+				if (t[ligne][colonne] == 'X')
+					nbC1 = nbC1 + 1;
+				else if (t[ligne][colonne] == 'O')
+					nbC2 = nbC2 + 1;
 			}
 		}
 		if (nbC1 > nbC2)
-			System.out.println("Joueur n°1 XINS !!!"
+			System.out.println("Joueur n°1 WINS !!!"
 					+ "\n\tX : "+nbC1
 					+ "\n\tO : "+nbC2);
 		else if (nbC1 < nbC2)
-				System.out.println("Joueur n°2 WINS !!!"
-						+ "\n\tX : "+nbC1
-						+ "\n\tO : "+nbC2);
+			System.out.println("Joueur n°2 WINS !!!"
+					+ "\n\tX : "+nbC1
+					+ "\n\tO : "+nbC2);
 		else
-				System.out.println("MATCH NUL !!!"
-						+ "\n\tX : "+nbC1
-						+ "\n\tO : "+nbC2);
+			System.out.println("MATCH NUL !!!"
+					+ "\n\tX : "+nbC1
+					+ "\n\tO : "+nbC2);
 	}
 }

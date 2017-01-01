@@ -138,25 +138,27 @@ public class Menu {
 					System.out.println("Joueur n°1 c'est à vous !!!");
 					croix = Othello.saisiePion();
 					while(!Othello.verifPion(othellier, croix)) {
-						System.out.println(Othello.verifPion(othellier, croix));
 						System.out.println("Placement impossible...try again pliz");
 						croix = Othello.saisiePion();
 					}
 					Othello.placementPion(othellier, croix, 'X');
 					Othello.convert(othellier, 'X', croix);
 					Othello.affichePlateau(othellier);
+					if (Othello.tableauPlein(othellier))
+						fin = true;
 					System.out.println("Joueur n°2 c'est à vous !!!");
 					rond = Othello.saisiePion();
 					while(!Othello.verifPion(othellier, rond)) {
-						System.out.println(Othello.verifPion(othellier, rond));
 						System.out.println("Placement impossible...try again pliz");
 						rond = Othello.saisiePion();
 					}
 					Othello.placementPion(othellier, rond, 'O');
 					Othello.convert(othellier, 'O', rond);
 					Othello.affichePlateau(othellier);
+					if (Othello.tableauPlein(othellier))
+						fin = true;
 				}
-				Othello.winner(othellier, 'X', 'O');
+				//Othello.winner(othellier); a corriger
 				break;
 			default :
 				break;
